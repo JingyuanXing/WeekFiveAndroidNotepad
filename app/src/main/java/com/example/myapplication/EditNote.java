@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashSet;
 
@@ -49,8 +48,8 @@ public class EditNote extends AppCompatActivity implements TextWatcher {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "You wrote a new note", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(mainIntent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashSet;
 
-import static com.example.myapplication.MainActivity.notes;
+import static com.example.myapplication.MainActivity.noteList;
 import static com.example.myapplication.MainActivity.set;
 
 public class EditNote extends AppCompatActivity implements TextWatcher {
@@ -36,7 +36,7 @@ public class EditNote extends AppCompatActivity implements TextWatcher {
         noteId = i.getIntExtra("noteId", -1);
 
         if(noteId != -1){
-            String fillerText = notes.get(noteId);
+            String fillerText = noteList.get(noteId);
             editText.setText(fillerText);
         }
 
@@ -62,7 +62,7 @@ public class EditNote extends AppCompatActivity implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        notes.set(noteId, String.valueOf(charSequence));
+        noteList.set(noteId, String.valueOf(charSequence));
         MainActivity.arrayAdapter.notifyDataSetChanged();
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.myapplication", Context.MODE_PRIVATE);
@@ -74,7 +74,7 @@ public class EditNote extends AppCompatActivity implements TextWatcher {
         }
         set.clear();
 
-        set.addAll(notes);
+        set.addAll(noteList);
         sharedPreferences.edit().remove("notes").apply();
         sharedPreferences.edit().putStringSet("notes", set).apply();
     }

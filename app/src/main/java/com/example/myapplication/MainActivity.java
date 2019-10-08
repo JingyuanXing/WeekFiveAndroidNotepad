@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    static ArrayList<String> notes = new ArrayList<>();
+    static ArrayList<String> noteList = new ArrayList<>();
     static ArrayAdapter arrayAdapter;
     static Set<String> set;
 
@@ -40,21 +40,21 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.myapplication", Context.MODE_PRIVATE);
         set = sharedPreferences.getStringSet("notes", null);
 
-        notes.clear();
+        noteList.clear();
 
         if(set != null){
-            notes.addAll(set);
+            noteList.addAll(set);
         }else{
-            notes.add("Example note");
+            noteList.add("Example note");
             set = new HashSet<String>();
-            set.addAll(notes);
+            set.addAll(noteList);
             sharedPreferences.edit().remove("notes").apply();
             sharedPreferences.edit().putStringSet("notes", set).apply();
         }
 
 
 
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, notes);
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, noteList);
 
         listView.setAdapter(arrayAdapter);
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                notes.remove(position);
+                                noteList.remove(position);
                                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.myapplication", Context.MODE_PRIVATE);
 
                                 if(set == null){
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                                     set.clear();
                                 }
 
-                                set.addAll(MainActivity.notes);
+                                set.addAll(MainActivity.noteList);
                                 sharedPreferences.edit().remove("notes").apply();
                                 sharedPreferences.edit().putStringSet("notes", set).apply();
                                 arrayAdapter.notifyDataSetChanged();
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                notes.add("");
+                noteList.add("");
 
                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.myapplication", Context.MODE_PRIVATE);
 
@@ -115,14 +115,14 @@ public class MainActivity extends AppCompatActivity {
                     set.clear();
                 }
 
-                set.addAll(notes);
+                set.addAll(noteList);
                 sharedPreferences.edit().remove("notes").apply();
                 sharedPreferences.edit().putStringSet("notes", set).apply();
                 arrayAdapter.notifyDataSetChanged();
 
                 Intent intent = new Intent(getApplicationContext(), EditNote.class);
 
-                intent.putExtra("noteId", notes.size()-1);
+                intent.putExtra("noteId", noteList.size()-1);
 
                 startActivity(intent);
             }
@@ -153,4 +153,4 @@ public class MainActivity extends AppCompatActivity {
 }
 
 
-// citation: youtube video
+// citation: youtube video, stackoverflow
